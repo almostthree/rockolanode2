@@ -1,0 +1,636 @@
+samp, body, html, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+font-family: 'Open Sans Condensed', sans-serif!important;
+}
+html, body, section {margin:0;padding: 5px 5px 5px 5px; height:100%;}
+
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+color:    #000;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+color:    #000;
+opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+color:    #000;
+opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+color:    #000;
+}
+.verde{
+background-color: #0c6b06 !important;
+}
+.verde i{
+display:none;
+}
+dialog {
+  width: 500px;
+  background: #858dab;
+}
+	dialog h3{
+		margin-top: 0px;
+	}
+
+.buscar{
+ 				  width: 100%;
+ 				  padding-bottom: 10px;
+ 				  padding-top: 10px;
+ 				  padding-left: 1%;
+ 				  font-weight: 200!important;
+ 				  font-size: 25px;
+ 				  text-align: center;
+ 				  border: 1px solid #dadada;
+ 				  background: url(/images/buscarico.png);
+ 				  background-position: 98% 50%;
+ 				  background-repeat: no-repeat;
+ 				  background-size: 30px;
+ 				  padding-right: 8%;
+ 				  background-color: rgba(255, 255, 255, 0.5);
+ 				  color: #000;
+			      border-radius: 0px 0px 50px 50px;
+ 				 
+
+			}	
+			
+#buscar{
+	  width: 100%;
+	  padding-bottom: 10px;
+	  padding-top: 10px;
+	  padding-left: 1%;
+	  font-weight: 200!important;
+	  font-size: 25px;
+	  text-align: center;
+	  border: 1px solid #dadada;
+	  background: url(/images/buscarico.png);
+	  background-position: 98% 50%;
+	  background-repeat: no-repeat;
+	  background-size: 30px;
+	  padding-right: 8%;
+	  background-color: rgba(255, 255, 255, 0.5);
+	  color: #000;
+  border-radius: 50px;
+	 
+
+}
+
+#buscar:focus{
+	outline: none!important;
+    box-shadow:1px 0px 2pt 1pt rgba(0, 107, 255, 0.6);
+    border-color: rgba(0, 107, 255, 0.7);
+
+}
+ #sala {
+
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-weight: 200!important;
+    font-size: 25px;
+    text-align: center;
+    border: 1px solid #dadada;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000;
+    border-radius: 50px;
+    width: 90%;
+}
+
+#sala:focus{
+	outline: none!important;
+    box-shadow: 0 0 1pt 1pt rgba(19, 121, 197, 0.87);
+
+}
+
+
+	
+#boton {
+width: 50%;
+margin-top: 2%;
+margin-left: 25%;
+padding-bottom: 10px;
+padding-top: 10px;
+ font-weight: 600!important;
+ font-size: 20px;
+ border: 1px solid #dadada;
+ text-align: center;
+ cursor: pointer;
+}
+#boton:hover{
+background: #dadada;
+
+}
+.remover {
+position: absolute;
+width: 100%;
+height: 100%;
+background: #ca4545;
+z-index: 5;
+color: #fff;
+border-top-right-radius: 45px;
+border-bottom-right-radius: 45px;
+opacity: 0;
+cursor: pointer;
+-webkit-transition: all 0.5s ease-in-out;
+-moz-transition: all 0.5s ease-in-out;
+-o-transition: all 0.5s ease-in-out;
+-ms-transition: all 0.5s ease-in-out;
+transition: all 0.5s ease-in-out;
+z-index: 5;
+text-align: center;	
+line-height: 25px;
+}
+
+.busqueda{
+width: 100%;
+}	
+.cancionBusqueda {
+width: 99%;
+height: 90px;
+max-width: 800px;
+position: relative;
+margin-bottom: 5px;
+cursor: pointer;
+	border-radius: 200px;
+background: #fff;
+}
+.cancionBusqueda:hover .boton-agregar{
+background: #416992;
+}
+.cancionBusqueda .titulo {
+font-size: 20px;
+font-weight: 600;
+height: 70px;
+position: relative;
+float: left;
+width: 100%;
+overflow: hidden;
+margin-bottom: 0;
+}
+.cancionBusqueda .imagen {
+float: left;
+height: 90px !important;
+width: 90px !important;
+border-radius: 50%;
+margin-left: -1px;
+}
+.cancionBusqueda .cargo {
+float: left;
+width: 100%;
+margin-bottom: 0;
+}
+.cancionBusqueda.agregada {
+background-color: rgb(118, 183, 199)!important;
+}
+.contenedor-musica {
+height: 58%;
+display: inline-block;
+overflow: auto;
+}
+
+.lista {
+height: 249px;
+}
+.boton-agregar {
+float: right;
+width: 15%;
+height: 100%;
+line-height: 90px;
+text-align: center;
+background-color: #062e6b;
+color: #fff;
+font-size: 35px;
+border-top-right-radius: 50px;
+border-bottom-right-radius: 50px;
+margin-right: -1px;
+}
+#busqueda {
+padding-left: 15px;
+}
+.reproductor-cancion .titulo {
+	overflow: hidden;
+	float: left;
+}
+.reproductor-cancion .repro {
+float: left;
+}
+.reproductor-cancion .imagen {
+position: absolute;
+width: 100px!important;
+left: 50%;
+top: 0;
+margin-left: -50px;
+}
+.reproductor-cancion .contenedor-imagen {
+margin-left: 0px;
+width: 75px;
+overflow: hidden;
+height: 75px;
+position: relative;
+border-radius: 50%;
+}
+.reproductor-cancion .imagen-atras {
+padding: 0;
+	z-index: 2;
+}
+.reproductor-cancion .titulo-atras {
+padding: 0px !important;
+height: 75px;
+line-height: 75px;
+z-index: 1;
+background-color: #fff;
+border-top-right-radius: 75px;
+border-bottom-right-radius: 75px;
+}
+.reproductor-cancion .titulo-atras:after {
+content: " ";
+width: 30px;
+height: 20px;
+background-color: #fff;
+display: block;
+position: absolute;
+left: -25px;
+top:0;
+}
+.reproductor-cancion .titulo-atras:before {
+content: " ";
+width: 30px;
+height: 20px;
+background-color: #fff;
+display: block;
+position: absolute;
+left: -25px;
+bottom: 0;
+}
+.reproductor-cancion .cargo {
+width: 100%;
+position: relative;
+z-index: 1;;
+}
+.reproductor-cancion .fb_foto{
+width:50px !important;
+border-radius: 50%;
+z-index: 1;
+position: relative;
+margin-top: 5px;
+}
+.reproductor-cancion .cargo-contenedor:before {
+content: " ";
+width: 80px;
+height: 80px;
+background-color: #fff;
+display: block;
+position: absolute;
+border-top-left-radius: 80px;
+top: 0;
+left: 50%;
+margin-left: -80px;
+}
+.reproductor-cancion .cargo-contenedor:after {
+content: " ";
+width: 80px;
+height: 80px;
+background-color: #fff;
+display: block;
+position: absolute;
+border-top-right-radius: 80px;
+top: 0;
+right: 50%;
+margin-right: -80px;
+}
+.reproductor-cancion .reproduciendo-play {
+line-height: 1;
+position: absolute;
+bottom: -5px;
+width: 100%;
+right: 25px;
+color: #000;
+padding: 4px;
+font-size: 15px;
+font-weight: 300;
+cursor: pointer;
+}
+.reproductor-cancion .reproduciendo-resubido {
+line-height: 1;
+position: absolute;
+top: 0px;
+width: 100%;
+right: 25px;
+color: #000000;
+padding: 4px;
+font-size: 12px;
+font-weight: 600;
+}
+.cancion {
+margin-bottom: 10px;
+}
+.cancion .titulo {
+	overflow: hidden;
+float: left;
+line-height: 1;
+text-align: center;
+width: 95%;
+margin-top: 10px;
+height: 13px;
+}
+.cancion .repro {
+float: left;
+}
+.cancion .imagen {
+position: absolute;
+width: 100px!important;
+left: 50%;
+top: 0;
+margin-left: -50px;
+}
+.cancion .contenedor-imagen {
+margin-left: 0px;
+width: 75px;
+overflow: hidden;
+height: 75px;
+position: relative;
+border-radius: 50%;
+}
+.cancion .imagen-atras {
+padding: 0;
+	z-index: 2;
+}
+.cancion .titulo-atras {
+padding: 0px !important;
+height: 75px;
+line-height: 75px;
+z-index: 1;
+background-color: #fff;
+border-top-right-radius: 75px;
+border-bottom-right-radius: 75px;
+}
+.cancion .titulo-atras:after {
+content: " ";
+width: 30px;
+height: 20px;
+background-color: #fff;
+display: block;
+position: absolute;
+left: -25px;
+top:0;
+}
+.cancion .titulo-atras:before {
+content: " ";
+width: 30px;
+height: 20px;
+background-color: #fff;
+display: block;
+position: absolute;
+left: -25px;
+bottom: 0;
+}
+.cancion .cargo {
+position: relative;
+z-index: 1;
+line-height: 1;
+float: left;
+margin-top: 20px;
+margin-left: 10px;
+}
+.cancion .fb_foto{
+width: 35px !important;
+border-radius: 50%;
+z-index: 1;
+position: relative;
+float: left;
+margin-left: 10px;
+margin-top: 10px;
+}
+.cancion .cargo-contenedor:before {
+content: " ";
+width: 80px;
+height: 80px;
+background-color: #fff;
+display: block;
+position: absolute;
+border-top-left-radius: 80px;
+top: 0;
+left: 50%;
+margin-left: -80px;
+}
+.cancion .cargo-contenedor:after {
+content: " ";
+width: 80px;
+height: 80px;
+background-color: #fff;
+display: block;
+position: absolute;
+border-top-right-radius: 80px;
+top: 0;
+right: 50%;
+margin-right: -80px;
+}
+.cancion .reproduciendo-play {
+line-height: 1;
+position: absolute;
+bottom: -5px;
+width: 100%;
+right: 25px;
+color: #000;
+padding: 4px;
+font-size: 15px;
+font-weight: 300;
+}
+
+.div-centrado {
+margin: 0 auto;
+display: table;
+table-layout: fixed;
+float: none;
+text-align: center;
+}
+
+
+.titulo-temas {
+font-weight: 200;
+text-align: center;
+margin-top: 15px;
+-webkit-border-radius: 3px 5px 0px 0px;
+}
+.contenedor-busqueda {
+width: 100%;
+display: inline-block;
+margin-top: 15px;
+overflow: auto;
+height: 85.4%;
+position: relative;
+}
+body {
+background: url('../images/fondorockola.jpg');
+	background-size: cover;
+	background-position-y: 40%;
+	height: initial;
+    max-width: 1360px;
+    margin: 0 auto!important;
+}
+.manitoarribapa {
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	border-radius: 50%;
+	background-color: #062e6b;
+	text-align: center;
+	font-size: 22px;
+	position: absolute;
+	right: 0;
+	top: 12px;
+	cursor: pointer;
+	-webkit-transition:  all 0.2s ease-in-out;
+	-moz-transition:  all 0.2s ease-in-out;
+	-o-transition:  all 0.2s ease-in-out;
+	-ms-transition:  all 0.2s ease-in-out;
+	transition:  all 0.2s ease-in-out;
+	z-index: 6;
+}
+.manitoarribapa:hover {
+	background-color: #093f90;
+}
+.contenedortitudura {
+	width: 45%;
+	height: 90px;
+	overflow: hidden;
+	float: left;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+.este{
+	padding: 0!important;
+}
+@media(max-width:768px){
+	#reproductor{
+		position: fixed;
+	
+    	transform: translateY(-100%);
+    	width: 100%;
+    	-webkit-transition: all 0.5s ease-in-out;
+		-moz-transition: all 0.5s ease-in-out;
+		-o-transition: all 0.5s ease-in-out;
+		-ms-transition: all 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+	}
+	#reproductor.activo {
+     	transform: translateY(0%);
+	}
+	.buscador-contenedor-todo.activo {
+		height: 0%!important;
+		opacity: 0;
+	}
+
+	.reproductor-cancion .titulo-atras:after, .reproductor-cancion .titulo-atras:before{
+		width: 20px;
+		left: -15px;
+	}
+	.cancion .titulo-atras:before, .cancion .titulo-atras:after {
+		width: 20px;
+		left: -15px; 
+	}
+	.cancion .fb_foto{
+			margin-left: 18%;
+		}
+	#temasresponsive{
+		margin-top: 45%;
+		-webkit-transition: all 0.5s ease-in-out;
+		-moz-transition: all 0.5s ease-in-out;
+		-o-transition: all 0.5s ease-in-out;
+		-ms-transition: all 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+		padding: 0;
+	}
+	html{
+		padding-right: 0;
+		padding-left: 0;
+	}
+	body{
+		overflow: hidden;
+		padding-right:0;
+		padding-left: 0;
+	}
+	.contenedor-busqueda{
+		height: 64.4%;
+	}
+	.reproductor-cancion .titulo-atras{
+		border-radius: 0!important;
+
+	}
+	.cancion .titulo-atras{
+		border-radius: 0!important;
+
+	}
+	.reproductor-cancion{
+		padding: 0!important;
+	}
+
+	.nopadding{
+		padding:0!important;
+	}
+	.nopadding div {
+		padding: 0!important;
+	}
+	.buscador-contenedor-todo {
+		opacity: 1;
+		-webkit-transition: all 0.5s ease-in-out;
+		-moz-transition: all 0.5s ease-in-out;
+		-o-transition: all 0.5s ease-in-out;
+		-ms-transition: all 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+	} 
+	.cancion{
+		padding: 0!important;
+	}
+	.contenedor-musica{
+		padding:0!important;
+		height: 50vh;
+		overflow-x: hidden;
+	}
+	.manitoarribapa{
+		right:10px!important;
+	}
+	.abriRepro{
+		right: 10px!important;
+	}
+	.imagen-atras{
+		width: 6%!important;
+	}
+	.reproductor-cancion .contenedor-imagen{
+		margin-left: -20px;
+	}
+	.titulos-temas h1{
+		font-size: 25px;
+   		color: #fff;
+   		box-shadow: rgba(86, 165, 179, 0.78) 0px 8px 11px 1px;
+	}
+	section{
+		padding:0;
+	}
+
+	.cancion .contenedor-imagen{
+		margin-left: -20px;
+	}
+	.reproductor-cancion .cargo-contenedor:before {
+
+	}
+
+	.cancionBusqueda .titulo{
+		font-size: 15px;
+	}
+	.boton-agregar{
+		font-size: 22px;
+	}
+	#buscar{
+		border-radius: 0!important;
+		border: none!important;
+	}
+
+}

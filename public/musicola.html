@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<style type="text/css">
+  .ad-container,.annotation{
+    display:none !important;
+  }
+  .adDisplay {
+    display:none !important;
+  }
+</style>
+
+<head>
+    <title>RADIO LA COSTA</title>
+</head>
+<body style="overflow:hidden;margin:0;">
+
+<div id="player" style="position: absolute;width: 100%;height: 100%"></div>
+
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="http://www.youtube.com/player_api"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+    var nojodan = 0.5;
+        // create youtube player
+        var player;
+        var pk='';
+        var socket = io();
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+        var sala = getParameterByName("id");
+
+function onYouTubePlayerAPIReady() {
+          socket.emit('reproducir-sala', sala);
+          player = new YT.Player('player', {
+            height: '720',
+            width: '1080',
+            events: {
+              'onReady': onPlayerReady,
+              'onStateChange': onPlayerStateChange,
+              'onError': onError
+            }
+          });
+        }
+        // autoplay video
+function onPlayerReady(event) {
+            socket.on('resp-repsala',function(respuesta){
+            console.log(respuesta);
+              pk = respuesta[0]['pktema'];
+               if (respuesta[0]['url']!='null') {
+                  player.loadVideoById(respuesta[0]['url']); 
+                  socket.emit('repro-estador', sala,pk,respuesta[0]['pkcancion']);
+                  socket.emit('actualizar-todo',sala);
+                } else {
+                    player.loadVideoById('CUGzWETn1HQ'); 
+                }
+            });
+            event.target.playVideo();
+        } 
+
+function onError(event) {
+             socket.emit('reproducir-sala', sala);       
+            
+        }
+
+        // when video ends
+function onPlayerStateChange(event) {        
+            if(event.data === 0) {          
+               
+               socket.emit('reproducir-sala', sala);
+               
+            
+
+            }
+        }
+
+    </script>
+</body>
+</html>

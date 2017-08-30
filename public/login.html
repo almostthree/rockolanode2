@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script src="js/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link href="css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+
+
+.nahuel:hover {
+	-webkit-transition:  all 0.5s ease-in-out;
+    -moz-transition:  all 0.5s ease-in-out;
+    -o-transition:  all 0.5s ease-in-out;
+    -ms-transition:  all 0.5s ease-in-out;
+    transition:  all 0.5s ease-in-out;
+	-webkit-filter: brightness(1.1);
+	-moz-filter: brightness(1.1);
+	-o-filter: brightness(1.1);
+	-ms-filter: brightness(1.1);
+	filter: brightness(1.1);
+	cursor: pointer;
+
+}
+
+.nahuel:hover .logo-giga{
+
+	-webkit-transition:  all 0.5s ease-in-out;
+    -moz-transition:  all 0.5s ease-in-out;
+    -o-transition:  all 0.5s ease-in-out;
+    -ms-transition:  all 0.5s ease-in-out;
+    transition:  all 0.5s ease-in-out;
+	-webkit-filter: brightness(1.1);
+	-moz-filter: brightness(1.1);
+	-o-filter: brightness(1.1);
+	-ms-filter: brightness(1.1);
+	filter: brightness(1.1);
+
+}
+
+body {
+	background: url('images/fondorockola.jpg');
+    background-size: cover;
+    background-position-y: 40%;
+    height: initial;
+}
+.notebuguees .container{
+	margin-top: 120px;
+	max-width: 670px;
+}
+#logoPortada {
+    text-align: center;
+    margin-bottom: 30px;
+}
+</style>
+	<title>Musicola</title>
+</head>
+<body >
+
+<div id="fb-root"></div>
+<script>
+
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.9&appId=1748637682122698";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+</script>
+
+
+
+	<section class='notebuguees'>
+	<div class='container'>
+		<div class='row'>
+			<div>
+				<figure id="logoPortada" class="row">
+                  <img src="images/logo-rockola.png" class="logo-giga" style="width: 75%!important;">
+                </figure>
+				<div class='col-sm-12' style='text-align: center'>
+						<img class="nahuel" src="images/facebook.png" style="width: 250px;">
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	//var socket = io();
+	var socket = io.connect({
+   "transports": ['polling']
+});
+		$(document).on('click', '.nahuel', function(event) {
+		FB.login(function(response) {
+
+		  if (response.status === 'connected') {
+		  		FB.api('/me?fields=id,name,picture.width(200).height(200)',function(response){
+					socket.emit('login',response);
+		  		});
+				 
+		  } else {
+    			alert("NO ANDUVO");
+
+		  }
+
+			});
+			/*var response = {id:"1243512333",name:"Prueba Almada",picture:{data:{height:200,is_silhouette:false,url:"https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/18835493_10212288319590533_8907760938502465916_n.jpg?oh=43a0e68964c27d4f7c8d8243592957b3&oe=59FCE9C2",width:200}}};
+			socket.emit('login',response);*/
+		});
+
+		socket.on('login-encontrado',function(data){
+			if(data){
+				location.href='subirmusica.html';
+			}
+		});
+});
+
+
+
+</script>

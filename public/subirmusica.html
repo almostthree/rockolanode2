@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<html>
+<head>
+	<title>Musicola</title>
+		<!--<script src="js/client.js"></script> NODE -->
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/rockola.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/estilos.css">
+</head>
+<body>	
+<section>
+<div class="modal fade" id="modalSala" role="dialog">
+	<div class="modal-dialog modal-sm">
+	    
+	    <img  src="" alt=""> 
+	    <div class="modal-content">
+		    <div class="modal-header">
+		    	<h2>Bienvenido</h2>
+		    </div>
+		    <div class="modal-body">
+		    	<center>
+		    	<h4>Ingrese el codigo de la sala</h4>
+		        <input id="sala" type="number" autofocus name="txtrandom" >
+		     </center>
+		    </div>
+		    <div class="modal-footer">
+		      <div><i id="cerrar" class="fa fa-check-circle-o" aria-hidden="true"></i></div>
+		    </div>
+	  	</div>
+	</div>
+</div>
+	<div class="container">
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="row">
+						<input type="range" name="" style="opacity: 0;">
+						<input type="text" name="txtbuscador" placeholder="Buscar"  class="buscador">
+					</div>
+				</div> 	 
+				<div class="col-sm-12">
+					<div class="row">
+						<div id="canciones-busqueda">
+						</div>
+					</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+	<div class="reproductor">
+		<div class="contenedor-reproductor">
+			<div class="col-sm-6">
+				<div class="row">	
+					<div class="contenedor-rep1"></div>
+				</div>
+			</div>
+			<div class="col-sm-6 hidden-xs">
+				<div class="col-sm-3 reproductor-siguientes">
+					<div class="row">
+						<i class="fa fa-play" aria-hidden="true"></i>
+						<h3>Siguientes</h3>';
+					</div>				
+				</div>		
+				<div class="col-sm-9 reproductor-cds">		
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-sm-12 siguientes-contenedor">
+		</div>
+	</div>
+
+</section>
+	
+
+
+<script type="text/javascript">
+var numerito = '0';
+var numerito_reproducir = '0';
+
+var id = '';
+var idf = '';
+var socket = io.connect({
+   "transports": ['polling']
+});
+	$(document).ready(function(){
+		keepAlive();
+		socket.emit('buscar-persona');
+		socket.on('persona-encontrada',function(msg){
+            idf=msg[0]['pkpersona'];
+            if (idf != '') {
+	            $(".modal-sm img").attr('src', 'https://scontent.xx.fbcdn.net/v/'+msg[0]['img']);
+	            var nombre = msg[0]['nombre'].split(' ');
+	            $(".modal-sm .modal-header h2").html('Bienvenido '+nombre[0]);
+	            $("#modalSala").modal();
+            } else {
+            	location.href='login.html'
+            }
+        });
+
+		
+
+		$(document).on('click', '.contenedor-reproductor', function(event) {
+			
+			$('.reproductor').toggleClass('activo');
+			$('.siguientes-contenedor').toggleClass('activo');
+			
+			
+		});
+		$(document).on('keypress', '.buscador', function(event) {
+			if ($(this).val() != '') {
+				if (event.keyCode === 13) {
+					var busqueda = "";
+					busqueda = $(this).val();
+					this.blur();
+					buscar(busqueda);
+				}
+			} else {
+				$('#canciones-busqueda').html('');
+			}
+		});
+
+		$(document).on('click', '.busqueda-cancion', function(event) {
+			if ($(this).hasClass('agregada')) {
+				var pkt = $(this).attr('data-id');
+				var salaa= $('#sala').val();
+				socket.emit("cambiar-estado-cancion", pkt, idf);
+				socket.on('resp-cancion',function(data){
+					if (data[0].estado == 1) {
+						$('.busqueda-cancion.agregada[data-id="'+pkt+'"]').remove();
+						socket.emit("actualizar-todo",salaa);
+					} else {
+						alert(data[0].error);
+					}
+		        });
+			} else {
+
+			var id= $(this).attr('data-id');
+			$.ajax({
+					type:"GET",
+					url:"https://api.deezer.com/track/"+id+"&output=jsonp",
+					dataType:"jsonp",
+					success:function(e){
+							var imagen = e.album.cover_big;
+							var titulo = e.title+" - "+e.artist.name;
+					        titulo = titulo.split('&').join('and');
+
+					    	var duracionmin = e.duration/60;
+					        duracionmin = Math.trunc(duracionmin);
+					        duracionseg = e.duration%60;
+					        duracionseg = Math.trunc(duracionseg);
+					        duracionseg = (duracionseg<10 ? "0" : "") + duracionseg;
+					        var duracion =duracionmin+":"+duracionseg;
+					        var url = "";
+
+					        var salaa= $('#sala').val();
+					        if (duracionmin >= 4) {
+						                     $.ajax({
+													url: "https://www.googleapis.com/youtube/v3/search?part=snippet&q="+titulo+"&maxResults=15&type=video&key=AIzaSyAmY-ni8ltxYVOV-IVZNoU4vs2SGjG38b8&videoDuration=medium",
+													      complete: function(data) {
+						 									var url = data.responseJSON.items[0].id.videoId;
+						 									//var imagen = data.responseJSON.items[0].snippet.thumbnails.high.url;
+						 									socket.emit("subir-tema", e, url, idf);
+						 									socket.on('resp-tema',function(data){
+																
+														 		if (data[0]['estadosala'] == 1 && data[0]['estadotema'] == 1) {
+														 			($('.busqueda-cancion.noagregada[data-id='+id+']')).remove();
+														 			socket.emit("actualizar-todo");
+														 		} else if(data[0]['estadosala'] == 0) {
+														 				$("#modalSala").modal();	
+														 				$("#modalSala").addClass('denuevo');
+														 		}else{
+																		alert('Error n°1');		 			
+														 		
+														 		}
+													        });
+						                 			}
+						             			});
+						                 } else {
+						                 	$.ajax({
+													url: "https://www.googleapis.com/youtube/v3/search?part=snippet&q="+titulo+"&maxResults=15&type=video&key=AIzaSyAmY-ni8ltxYVOV-IVZNoU4vs2SGjG38b8&videoDuration=short",
+													      complete: function(data) {
+						 									var url = data.responseJSON.items[0].id.videoId;
+						 									//var imagen = data.responseJSON.items[0].snippet.thumbnails.high.url;
+															socket.emit("subir-tema", e, url, idf);
+						 									socket.on('resp-tema',function(data){
+																
+														 		if (data[0]['estadosala'] == 1 && data[0]['estadotema'] == 1) {
+														 			($('.busqueda-cancion.noagregada[data-id='+id+']')).remove();
+														 			socket.emit("actualizar-todo");
+														 		} else if(data[0]['estadosala'] == 0) {
+														 				$("#modalSala").modal();	
+														 				$("#modalSala").addClass('denuevo');
+														 		}else{
+																		alert('Error n°1');		 			
+														 		
+														 		}
+													        });
+						                 			}
+						             			});
+						                 }
+					   	
+					},error:function(e,t,n){
+					console.log(e),console.log(t),console.log(n)}
+				});
+
+
+
+
+				
+				
+		 	}
+			 	
+		});
+
+		$(document).on('blur', '#sala', function(event) {
+			$('#modalSala').modal('hide');
+		});
+
+		$(document).on('keyup', '#sala', function(event) {
+			var sala=$('#sala').val();
+			if ($('#sala').val()!=''){
+				socket.emit('buscar-sala',$('#sala').val());
+				socket.on('sala-encontrada',function(data){
+					if (data) {
+						$('#cerrar').css({color: '#3cc126',cursor: 'pointer'});
+						$('#cerrar').on('click',function(event){
+							$('#modalSala').modal('hide');
+						});
+					} else {
+						$('#cerrar').css({color: 'rgb(214, 55, 55)',cursor: 'pointer'});
+					}
+		        });
+				if(event.which==13){
+
+						
+						$('#modalSala').modal('hide');
+				}
+
+
+			} else {
+				$('#cerrar').css({
+					color: '#dadada',
+					cursor: 'not-allowed'
+				});
+			}
+		});
+		$('#modalSala').on('hidden.bs.modal', function (e) {
+			$("#modalSala").removeClass('denuevo');
+            socket.emit('entro-sala');
+            
+	        
+		});
+
+		socket.on('cargar-canciones',function(data){
+			if (data[1] == $('#sala').val()) {
+            	cargar_canciones(data[0]);
+            	data = "";
+            }
+	    });
+	    socket.on('cargar-reproductor',function(data){
+	    	if (data[1] == $('#sala').val()) {
+	    		cargar_reproductor(data[0]);
+	    		data = "";
+
+	        }
+	    });
+	    socket.on('cargar-imagenes-reproductor',function(data){
+			if (data[1] == $('#sala').val()) {
+        		cargar_reproductor_imagenes(data[0]);
+        		data = "";
+        	}
+        });
+	    socket.on('resp-like', function(data){
+			socket.emit("actualizar-todo");
+		});
+
+		$(document).on('click', '.heart', function() {
+			var datac=$(this).attr('data-id');
+			//$(this).removeClass("activo heart_animate");
+			//$(this).addClass("heart_animate");
+			socket.emit('like-tema',datac);     
+	    });
+		
+
+	});
+</script>
+</body>
+</html>
